@@ -5,7 +5,6 @@ import com.danielbohry.dnser.repository.DomainRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -14,6 +13,7 @@ import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -77,6 +77,27 @@ public class DomainServiceTest {
 
         //then
         assertEquals(Set.of(new Subdomain("1", "test", "0.0.0.0")), response.getSubdomains());
+    }
+
+    @Test
+    public void shouldAddSubdomainWithRandomName() {
+        //given
+        insertSomeDomain("domain1.com");
+
+        //and
+        when(client.create(any())).thenReturn("1");
+
+        //when
+        Domain response = service.addSubdomain("domain1.com", null, "0.0.0.0");
+
+        //then
+        assertEquals(1, response.getSubdomains().size());
+        assertEquals("domain1.com", response.getName());
+
+        if (response.getSubdomains().stream().findFirst().isPresent()) {
+            assertEquals("0.0.0.0", response.getSubdomains().stream().findFirst().get().getTarget());
+            assertNotNull(response.getSubdomains().stream().findFirst().get().getName());
+        }
     }
 
     @Test

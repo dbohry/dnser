@@ -4,6 +4,7 @@ import com.danielbohry.dnser.client.CloudflareClient;
 import com.danielbohry.dnser.exception.NotFoundException;
 import com.danielbohry.dnser.repository.DomainRepository;
 import lombok.AllArgsConstructor;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,6 +33,10 @@ public class DomainService {
 
     public Domain addSubdomain(String domainName, String subDomainName, String target) {
         Domain domain = get(domainName);
+
+        if (subDomainName == null) {
+            subDomainName = RandomStringUtils.randomAlphanumeric(8);
+        }
 
         String externalId = domain.hasSubdomain(subDomainName)
                 ? client.update(domain.getSubdomainByName(subDomainName))

@@ -6,6 +6,8 @@ import lombok.Data;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.time.LocalDateTime.now;
+
 @Data
 public class DnsRecordRequest {
 
@@ -14,7 +16,7 @@ public class DnsRecordRequest {
     private String name;
     private boolean proxied = false;
     private String type = "A";
-    private String comment = "Auto generated";
+    private String comment = "Auto generated " + now();
     private List<String> tags = new ArrayList<>();
     private int ttl = 3600;
 
