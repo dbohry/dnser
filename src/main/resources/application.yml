@@ -4,10 +4,10 @@ server:
 spring:
   data:
     mongodb:
-      uri: ${mongo:}
-      database: ${database:dnser}
+      uri: ${MONGO:}
+      database: ${database:dnser-test}
 
 cloudflare:
   url: https://api.cloudflare.com/client/v4/
-  zone: ${zone:}
-  token: ${token:}
+  zone: ${ZONE:}
+  token: ${TOKEN:}
