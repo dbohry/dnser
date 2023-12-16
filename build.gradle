@@ -7,8 +7,9 @@ plugins {
 group = 'com.danielbohry'
 version = '0.0.1'
 
-java {
+compileJava {
 	sourceCompatibility = '17'
+	targetCompatibility = '17'
 }
 
 configurations {
