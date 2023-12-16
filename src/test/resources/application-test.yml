@@ -2,9 +2,9 @@ spring:
   data:
     mongodb:
       uri: ${MONGO:}
-      database: ${database:dnser-test}
+      database: ${DATABASE:dnser-test}
 
 cloudflare:
   url: https://api.cloudflare.com/client/v4/
-  zone: ${ZONE:}
-  token: ${TOKEN:}
+  zone: ${CLOUDFLARE_ZONE:}
+  token: ${CLOUDFLARE_TOKEN:}
