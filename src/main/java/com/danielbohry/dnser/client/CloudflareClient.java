@@ -38,7 +38,7 @@ public class CloudflareClient {
 
     @SneakyThrows
     public String create(Subdomain subdomain) {
-        var request = new DnsRecordRequest(subdomain.getName(), subdomain.getTarget());
+        var request = new DnsRecordRequest(subdomain.getName(), subdomain.getTarget(), subdomain.getProxied());
 
         log.info("Create request {}", request);
 
@@ -55,7 +55,7 @@ public class CloudflareClient {
 
     @SneakyThrows
     public String update(Subdomain subdomain) {
-        var request = new DnsRecordRequest(subdomain.getName(), subdomain.getTarget());
+        var request = new DnsRecordRequest(subdomain.getName(), subdomain.getTarget(), subdomain.getProxied());
 
         log.info("Update request {}", request);
 

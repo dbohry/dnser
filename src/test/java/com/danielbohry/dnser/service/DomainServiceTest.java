@@ -73,10 +73,10 @@ public class DomainServiceTest {
         when(client.create(any())).thenReturn("1");
 
         //when
-        Domain response = service.addSubdomain("domain1.com", "test", "0.0.0.0");
+        Domain response = service.addSubdomain("domain1.com", "test", "0.0.0.0", true);
 
         //then
-        assertEquals(Set.of(new Subdomain("1", "test", "0.0.0.0")), response.getSubdomains());
+        assertEquals(Set.of(new Subdomain("1", "test", "0.0.0.0", true)), response.getSubdomains());
     }
 
     @Test
@@ -88,7 +88,7 @@ public class DomainServiceTest {
         when(client.create(any())).thenReturn("1");
 
         //when
-        Domain response = service.addSubdomain("domain1.com", null, "0.0.0.0");
+        Domain response = service.addSubdomain("domain1.com", null, "0.0.0.0", true);
 
         //then
         assertEquals(1, response.getSubdomains().size());
@@ -107,14 +107,14 @@ public class DomainServiceTest {
         insertSomeDomain(id);
         String subdomain1 = "test";
         String subdomain2 = "test2";
-        service.addSubdomain(id, subdomain1, "0.0.0.0");
-        service.addSubdomain(id, subdomain2, "0.0.0.0");
+        service.addSubdomain(id, subdomain1, "0.0.0.0", true);
+        service.addSubdomain(id, subdomain2, "0.0.0.0", true);
 
         //when
         Domain response = service.removeSubdomain(id, subdomain1);
 
         //then
-        assertEquals(response.getSubdomains(), Set.of(new Subdomain("test2", "0.0.0.0")));
+        assertEquals(response.getSubdomains(), Set.of(new Subdomain("test2", "0.0.0.0", true)));
     }
 
     private void insertSomeDomain(String domain) {

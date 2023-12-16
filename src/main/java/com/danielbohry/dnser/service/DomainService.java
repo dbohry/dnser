@@ -31,7 +31,7 @@ public class DomainService {
         return repository.save(Domain.builder().name(name).build());
     }
 
-    public Domain addSubdomain(String domainName, String subDomainName, String target) {
+    public Domain addSubdomain(String domainName, String subDomainName, String target, boolean proxied) {
         Domain domain = get(domainName);
 
         if (subDomainName == null) {
@@ -40,9 +40,25 @@ public class DomainService {
 
         String externalId = domain.hasSubdomain(subDomainName)
                 ? client.update(domain.getSubdomainByName(subDomainName))
-                : client.create(new Subdomain(subDomainName, target));
+                : client.create(new Subdomain(subDomainName, target, proxied));
 
-        Subdomain subdomain = new Subdomain(externalId, subDomainName, target);
+        Subdomain subdomain = new Subdomain(externalId, subDomainName, target, proxied);
+        domain.addSubdomain(subdomain);
+        return repository.save(domain);
+    }
+
+    public Domain updateSubdomain(String domainName, String subDomainName, String target, boolean proxied) {
+        Domain domain = get(domainName);
+
+        if (!domain.hasSubdomain(subDomainName)) {
+            throw new NotFoundException("No subdomain found for " + subDomainName);
+        }
+
+        Subdomain subdomain = domain.getSubdomainByName(subDomainName);
+        subdomain.setName(subDomainName);
+        subdomain.setTarget(target);
+        subdomain.setProxied(proxied);
+
         domain.addSubdomain(subdomain);
         return repository.save(domain);
     }

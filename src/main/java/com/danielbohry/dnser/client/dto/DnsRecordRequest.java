@@ -18,10 +18,11 @@ public class DnsRecordRequest {
     private String type = "A";
     private String comment = "Auto generated " + now();
     private List<String> tags = new ArrayList<>();
-    private int ttl = 3600;
+    private int ttl = 1;
 
-    public DnsRecordRequest(String name, String target) {
+    public DnsRecordRequest(String name, String target, Boolean proxied) {
         this.name = name;
         this.target = target;
+        this.proxied = proxied;
     }
 }

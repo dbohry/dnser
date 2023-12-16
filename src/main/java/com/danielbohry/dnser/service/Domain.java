@@ -37,6 +37,7 @@ public class Domain {
         }
 
         this.subdomains.stream()
+                .filter(i -> subdomain.getName() != null)
                 .filter(i -> subdomain.getName().equals(i.getName()))
                 .findFirst()
                 .ifPresent(sub -> {

@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AddSubdomainRequest {
+public class UpdateSubdomainRequest {
 
-    private String name;
-    private String address = "0.0.0.0";
+    private String target = "0.0.0.0";
+    private Boolean proxied = false;
 
 }

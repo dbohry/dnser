@@ -1,7 +1,8 @@
 package com.danielbohry.dnser.api;
 
 import com.danielbohry.dnser.api.dto.SaveDomainRequest;
-import com.danielbohry.dnser.api.dto.AddSubdomainRequest;
+import com.danielbohry.dnser.api.dto.SubdomainRequest;
+import com.danielbohry.dnser.api.dto.UpdateSubdomainRequest;
 import com.danielbohry.dnser.service.Domain;
 import com.danielbohry.dnser.service.DomainService;
 import lombok.AllArgsConstructor;
@@ -35,8 +36,14 @@ public class DomainController {
     }
 
     @PutMapping("{id}/subdomain")
-    public ResponseEntity<Domain> addSubdomain(@PathVariable String id, @RequestBody AddSubdomainRequest request) {
-        Domain response = service.addSubdomain(id, request.getName(), request.getAddress());
+    public ResponseEntity<Domain> addSubdomain(@PathVariable String id, @RequestBody SubdomainRequest request) {
+        Domain response = service.addSubdomain(id, request.getName(), request.getTarget(), request.getProxied());
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("{id}/subdomain/{subdomain}")
+    public ResponseEntity<Domain> updateSubdomain(@PathVariable String id, @PathVariable String subdomain, @RequestBody UpdateSubdomainRequest request) {
+        Domain response = service.updateSubdomain(id, subdomain, request.getTarget(), request.getProxied());
         return ResponseEntity.ok(response);
     }
 
