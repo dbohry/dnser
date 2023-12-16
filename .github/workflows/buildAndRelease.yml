@@ -24,4 +24,4 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: Push image
-      run: docker push lhamacorp/anoning
+      run: docker push lhamacorp/dnser
