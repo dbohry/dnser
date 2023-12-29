@@ -40,7 +40,7 @@ public class DomainService {
 
         String externalId = domain.hasSubdomain(subDomainName)
                 ? client.update(domain.getSubdomainByName(subDomainName))
-                : client.create(new Subdomain(subDomainName, target, proxied));
+                : client.create(Subdomain.of(subDomainName, target, proxied));
 
         Subdomain subdomain = new Subdomain(externalId, subDomainName, target, proxied);
         domain.addSubdomain(subdomain);
@@ -55,11 +55,7 @@ public class DomainService {
         }
 
         Subdomain subdomain = domain.getSubdomainByName(subDomainName);
-        subdomain.setName(subDomainName);
-        subdomain.setTarget(target);
-        subdomain.setProxied(proxied);
-
-        domain.addSubdomain(subdomain);
+        domain.addSubdomain(new Subdomain(subdomain.id(), subDomainName, target, proxied));
         return repository.save(domain);
     }
 

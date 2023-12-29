@@ -38,7 +38,7 @@ public class CloudflareClient {
 
     @SneakyThrows
     public String create(Subdomain subdomain) {
-        var request = new DnsRecordRequest(subdomain.getName(), subdomain.getTarget(), subdomain.getProxied());
+        var request = new DnsRecordRequest(subdomain.name(), subdomain.target(), subdomain.proxied());
 
         log.info("Create request {}", request);
 
@@ -55,13 +55,13 @@ public class CloudflareClient {
 
     @SneakyThrows
     public String update(Subdomain subdomain) {
-        var request = new DnsRecordRequest(subdomain.getName(), subdomain.getTarget(), subdomain.getProxied());
+        var request = new DnsRecordRequest(subdomain.name(), subdomain.target(), subdomain.proxied());
 
         log.info("Update request {}", request);
 
         HttpEntity<String> requestEntity = new HttpEntity<>(mapper.writeValueAsString(request), defaultHeaders());
         ResponseEntity<UpdateRecordResponse> response = rest.exchange(
-                url + "zones/" + zone + "/dns_records/" + subdomain.getId(),
+                url + "zones/" + zone + "/dns_records/" + subdomain.id(),
                 HttpMethod.PUT,
                 requestEntity,
                 UpdateRecordResponse.class
@@ -76,7 +76,7 @@ public class CloudflareClient {
         log.info("Delete request {}", subdomain);
 
         rest.exchange(
-                url + "zones/" + zone + "/dns_records/" + subdomain.getId(),
+                url + "zones/" + zone + "/dns_records/" + subdomain.id(),
                 HttpMethod.DELETE,
                 requestEntity,
                 String.class

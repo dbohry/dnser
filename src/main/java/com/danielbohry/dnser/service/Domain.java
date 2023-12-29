@@ -21,12 +21,12 @@ public class Domain {
         }
 
         return this.subdomains.stream()
-                .anyMatch(i -> i.getName().equals(name));
+                .anyMatch(i -> i.name().equals(name));
     }
 
     public Subdomain getSubdomainByName(String name) {
         return this.subdomains.stream()
-                .filter(i -> i.getName().equals(name))
+                .filter(i -> i.name().equals(name))
                 .findFirst()
                 .orElseThrow(() -> new NotFoundException("No subdomain found with name " + name));
     }
@@ -37,11 +37,11 @@ public class Domain {
         }
 
         this.subdomains.stream()
-                .filter(i -> subdomain.getName() != null)
-                .filter(i -> subdomain.getName().equals(i.getName()))
+                .filter(i -> subdomain.name() != null)
+                .filter(i -> subdomain.name().equals(i.name()))
                 .findFirst()
                 .ifPresent(sub -> {
-                    removeSubdomain(subdomain.getName());
+                    removeSubdomain(subdomain.name());
                     addSubdomain(subdomain);
                 });
 
@@ -54,7 +54,7 @@ public class Domain {
         }
 
         this.subdomains.stream()
-                .filter(i -> subdomain.equals(i.getName()))
+                .filter(i -> subdomain.equals(i.name()))
                 .findFirst()
                 .ifPresent(sub -> this.subdomains.remove(sub));
     }
