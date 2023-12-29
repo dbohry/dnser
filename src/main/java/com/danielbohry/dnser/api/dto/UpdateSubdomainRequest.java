@@ -1,15 +1,10 @@
 package com.danielbohry.dnser.api.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+public record UpdateSubdomainRequest(String target, Boolean proxied) {
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class UpdateSubdomainRequest {
-
-    private String target = "0.0.0.0";
-    private Boolean proxied = false;
+    public UpdateSubdomainRequest(String target, Boolean proxied) {
+        this.target = (target == null || target.isBlank()) ? "0.0.0.0" : target;
+        this.proxied = (proxied != null) && proxied;
+    }
 
 }

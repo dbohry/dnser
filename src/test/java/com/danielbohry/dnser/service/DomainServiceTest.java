@@ -95,8 +95,8 @@ public class DomainServiceTest {
         assertEquals("domain1.com", response.getName());
 
         if (response.getSubdomains().stream().findFirst().isPresent()) {
-            assertEquals("0.0.0.0", response.getSubdomains().stream().findFirst().get().getTarget());
-            assertNotNull(response.getSubdomains().stream().findFirst().get().getName());
+            assertEquals("0.0.0.0", response.getSubdomains().stream().findFirst().get().target());
+            assertNotNull(response.getSubdomains().stream().findFirst().get().name());
         }
     }
 
@@ -114,7 +114,7 @@ public class DomainServiceTest {
         Domain response = service.removeSubdomain(id, subdomain1);
 
         //then
-        assertEquals(response.getSubdomains(), Set.of(new Subdomain("test2", "0.0.0.0", true)));
+        assertEquals(response.getSubdomains(), Set.of(Subdomain.of("test2", "0.0.0.0", true)));
     }
 
     private void insertSomeDomain(String domain) {
